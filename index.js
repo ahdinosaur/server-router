@@ -56,7 +56,7 @@ function serverRouter (dft, opts) {
       return function (params, req, res) {
         const args = sliced(arguments)
         args.splice(0, 3)
-        return cb.apply(null, [req, res, params].concat(args))
+        return cb.apply(this, [req, res, params].concat(args))
       }
     }
   }
@@ -66,6 +66,6 @@ function serverRouter (dft, opts) {
   function match (req, res) {
     const args = sliced(arguments)
     args.unshift(urlencode.decode(pathname(req.url)) + '/' + req.method)
-    return router.apply(null, args)
+    return router.apply(this, args)
   }
 }
